@@ -1,0 +1,30 @@
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: auth-service
+              uri: http://auth-service:8080
+              predicates:
+                - Path=/auth/**
+
+            - id: user-service
+              uri: http://user-service:8080
+              predicates:
+                - Path=/users/**
+
+            - id: order-service
+              uri: http://order-service:8080
+              predicates:
+                - Path=/orders/**
+
+server:
+  port: 8080
+
+jwt:
+  secret: ${JWT_SECRET}
