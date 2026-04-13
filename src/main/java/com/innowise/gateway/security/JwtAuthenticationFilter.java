@@ -28,8 +28,6 @@ public class JwtAuthenticationFilter implements GlobalFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
-        System.out.println("🔥 JWT FILTER CALLED");
-
         String path = exchange.getRequest().getURI().getPath();
 
         if (isWhiteListed(path)) {
