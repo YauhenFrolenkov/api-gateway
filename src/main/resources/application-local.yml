@@ -5,22 +5,22 @@ spring:
         webflux:
           routes:
             - id: auth-service
-              uri: http://localhost:8081
+              uri: ${services.auth.url}
               predicates:
                 - Path=/auth/**
 
             - id: user-service
-              uri: http://localhost:8080
+              uri: ${services.user.url}
               predicates:
-                - Path=/users/**, /cards/**
+                - Path=/users/**,/cards/**
 
             - id: order-service
-              uri: http://localhost:8082
+              uri: ${services.order.url}
               predicates:
                 - Path=/orders/**
 
 server:
-  port: 8083
+  port: ${SERVER_PORT:8083}
 
 jwt:
   secret: ${JWT_SECRET:superSecretKeyThatIsLongEnoughForJwt123456789}
