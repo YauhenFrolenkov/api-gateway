@@ -46,10 +46,6 @@ public class JwtAuthenticationFilter implements GlobalFilter {
 
         boolean valid = jwtProvider.validateToken(token);
 
-        System.out.println("PATH: " + path);
-        System.out.println("AUTH: " + authHeader);
-        System.out.println("TOKEN VALID: " + valid);
-
         if (!valid) {
             return unauthorized(exchange);
         }

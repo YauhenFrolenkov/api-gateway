@@ -4,6 +4,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -39,31 +42,14 @@ class JwtProviderTest {
         assertThat(result).isTrue();
     }
 
-    @Test
-    void shouldReturnFalse_whenTokenIsInvalid() {
-        boolean result = jwtProvider.validateToken("invalid.token");
-
-        assertThat(result).isFalse();
-    }
-
-    @Test
-    void shouldReturnFalse_whenTokenIsEmpty() {
-        boolean result = jwtProvider.validateToken("");
-
-        assertThat(result).isFalse();
-    }
-
-    @Test
-    void shouldReturnFalse_whenTokenIsNull() {
-        boolean result = jwtProvider.validateToken(null);
-
-        assertThat(result).isFalse();
-    }
-
-    @Test
-    void shouldReturnFalse_whenTokenIsMalformed() {
-        boolean result = jwtProvider.validateToken("abc.def");
-
+    @ParameterizedTest
+    @NullAndEmptySource
+    @ValueSource(strings = {
+            "invalid.token",
+            "abc.def"
+    })
+    void shouldReturnFalse_whenTokenIsInvalid(String token) {
+        boolean result = jwtProvider.validateToken(token);
         assertThat(result).isFalse();
     }
 
