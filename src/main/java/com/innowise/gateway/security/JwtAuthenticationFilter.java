@@ -21,7 +21,7 @@ public class JwtAuthenticationFilter implements GlobalFilter {
 
     private static final List<String> WHITE_LIST = List.of(
             "/auth/login",
-            "/auth/register",
+            "/registrations",
             "/actuator"
     );
 
