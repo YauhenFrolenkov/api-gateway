@@ -31,6 +31,10 @@ public class RegistrationService {
                         registerInUser(request, userId)
                                 .onErrorResume(ex ->
                                         rollbackAuth(request)
+                                                .onErrorResume(rollbackEx -> {
+                                                    log.error("Rollback failed for user: {}", request.getUsername(), rollbackEx);
+                                                    return Mono.empty();
+                                                })
                                                 .then(Mono.error(ex))
                                 )
                 );

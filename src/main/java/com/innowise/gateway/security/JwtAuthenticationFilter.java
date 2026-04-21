@@ -19,6 +19,8 @@ public class JwtAuthenticationFilter implements GlobalFilter {
 
     private final JwtProvider jwtProvider;
 
+    private static final String BEARER_PREFIX = "Bearer ";
+
     private static final List<String> WHITE_LIST = List.of(
             "/auth/login",
             "/registrations",
@@ -38,11 +40,11 @@ public class JwtAuthenticationFilter implements GlobalFilter {
                 .getHeaders()
                 .getFirst(HttpHeaders.AUTHORIZATION);
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        if (authHeader == null || !authHeader.startsWith(BEARER_PREFIX)) {
             return unauthorized(exchange);
         }
 
-        String token = authHeader.substring(7);
+        String token = authHeader.substring(BEARER_PREFIX.length());
 
         boolean valid = jwtProvider.validateToken(token);
 

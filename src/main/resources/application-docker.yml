@@ -5,28 +5,26 @@ spring:
 
   cloud:
     gateway:
-      server:
-        webflux:
-          routes:
-            - id: auth-service
-              uri: ${services.auth.url}
-              predicates:
-                - Path=/auth/**
+      routes:
+        - id: auth-service
+          uri: ${services.auth.url}
+          predicates:
+            - Path=/auth/**
 
-            - id: user-service
-              uri: ${services.user.url}
-              predicates:
-                - Path=/users/**,/cards/**
+        - id: user-service
+          uri: ${services.user.url}
+          predicates:
+            - Path=/users/**,/cards/**
 
-            - id: order-service
-              uri: ${services.order.url}
-              predicates:
-                - Path=/orders/**
+        - id: order-service
+          uri: ${services.order.url}
+          predicates:
+            - Path=/orders/**
 
-            - id: payment-service
-              uri: ${services.payment.url}
-              predicates:
-                - Path=/payments/**
+        - id: payment-service
+          uri: ${services.payment.url}
+          predicates:
+            - Path=/payments/**
 
 server:
   port: ${SERVER_PORT:8080}
