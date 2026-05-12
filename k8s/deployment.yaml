@@ -18,7 +18,7 @@ spec:
       containers:
         - name: api-gateway
 
-          image: api-gateway-api-gateway:latest
+          image: api-gateway:latest
 
           imagePullPolicy: Never
 
@@ -30,7 +30,10 @@ spec:
               value: docker
 
             - name: JWT_SECRET
-              value: superSecretKeyThatIsLongEnoughForJwt123456789
+              valueFrom:
+                secretKeyRef:
+                  name: api-gateway-secret
+                  key: jwt-secret
 
             - name: AUTH_SERVICE_URL
               value: http://auth-service:8080
